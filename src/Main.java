@@ -24,22 +24,26 @@ public class Main {
                 System.out.println("Creating statement...");
                 stmt = conn.createStatement();
                 String sql;
-                sql = "SELECT id, first last, age FROM Employees"; //Change these to our project
+                sql = "SELECT name, owner, species, sex, birth, death FROM pet"; //Change these to our project
                 ResultSet rs = stmt.executeQuery(sql);
 
                 //Extract data from result set
                 while(rs.next()) {
                 //Retrieve by column name
-                    int id = rs.getInt("id");
-                    int age = rs.getInt("age");
-                    String first = rs.getString("first");
-                    String last = rs.getString("last");
+                    String name = rs.getString("name");
+                    String owner = rs.getString("owner");
+                    String species = rs.getString("species");
+                    String sex = rs.getString("sex");
+                    Date birth = rs.getDate("birth");
+                    Date death = rs.getDate("death");
 
                     //Display Values
-                    System.out.println("ID: " + id);
-                    System.out.println(", Age: " + age);
-                    System.out.println(", First: " + first);
-                    System.out.println(", Last: " + last);
+                    System.out.println("Name: " + name);
+                    System.out.println(", Owner: " + owner);
+                    System.out.println(", Species: " + species);
+                    System.out.println(", Sex: " + sex);
+                    System.out.println(", Birth: " + birth);
+                    System.out.println(", Death: " + death);
                 }
 
                 //Clean-up environment
