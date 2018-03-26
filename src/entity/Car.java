@@ -5,7 +5,7 @@ package entity;
  */
 public class Car {
     private int carID;
-    private boolean tested;
+    private String tested;
 
     public int getCarID() {
         return carID;
@@ -15,11 +15,11 @@ public class Car {
         this.carID = carID;
     }
 
-    public boolean isTested() {
+    public String isTested() {
         return tested;
     }
 
-    public void setTested(boolean tested) {
+    public void setTested(String tested) {
         this.tested = tested;
     }
 }

@@ -1,14 +1,14 @@
 package entity;
 
-import java.sql.Timestamp;
+import java.sql.Time;
 
 /**
  * Created by Mitchell Chan on 2018-03-23.
  */
-public class Session {
+public class Sessions {
     private int seshID;
-    private Timestamp startTime; //Unsure if will work?
-    private Timestamp endTime; //Unsure if will work?
+    private Time startTime; //Unsure if will work?
+    private Time endTime; //Unsure if will work?
     private int testerID;
     private int carID;
     private int settingID;
@@ -21,19 +21,19 @@ public class Session {
         this.seshID = seshID;
     }
 
-    public Timestamp getStartTime() {
+    public Time getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(Time startTime) {
         this.startTime = startTime;
     }
 
-    public Timestamp getEndTime() {
+    public Time getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(Time endTime) {
         this.endTime = endTime;
     }
 

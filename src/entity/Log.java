@@ -8,14 +8,11 @@ import java.sql.*;
 public class Log {
     private int logID;
     private String comment;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
     private int speed;
     private int brake;
-    private float angle;
-    private int steering;
-    private String type;
-    private Time duration; //Change to int?
+    private String typeOf;
     private int seshID;
 
     public int getLogID() {
@@ -34,19 +31,19 @@ public class Log {
         this.comment = comment;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -66,36 +63,12 @@ public class Log {
         this.brake = brake;
     }
 
-    public float getAngle() {
-        return angle;
+    public String getTypeOf() {
+        return typeOf;
     }
 
-    public void setAngle(float angle) {
-        this.angle = angle;
-    }
-
-    public int getSteering() {
-        return steering;
-    }
-
-    public void setSteering(int steering) {
-        this.steering = steering;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Time getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Time duration) {
-        this.duration = duration;
+    public void setTypeOf(String typeOf) {
+        this.typeOf = typeOf;
     }
 
     public int getSeshID() {
