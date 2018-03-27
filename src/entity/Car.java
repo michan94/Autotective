@@ -15,7 +15,7 @@ public class Car {
         this.carID = carID;
     }
 
-    public boolean isTested() {
+    public boolean getTested() {
         return tested;
     }
 
