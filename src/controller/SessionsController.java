@@ -1,13 +1,12 @@
-package controllers;
+package controller;
 
 import com.sun.rowset.JdbcRowSetImpl;
-import entity.Setting;
-import entity.Tester;
+import entity.Sessions;
 
 import javax.sql.rowset.JdbcRowSet;
 import java.sql.SQLException;
 
-public class SettingController {
+public class SessionsController {
     //JDBC drive name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/Autotective";
@@ -18,14 +17,14 @@ public class SettingController {
 
     private JdbcRowSet rowSet = null;
 
-    public SettingController() {
+    public SessionsController() {
         try {
             Class.forName(JDBC_DRIVER);
             rowSet = new JdbcRowSetImpl();
             rowSet.setUrl(DB_URL);
             rowSet.setUsername(USER);
             rowSet.setPassword(PASS);
-            rowSet.setCommand("select * from settings");
+            rowSet.setCommand("select * from sessions");
             rowSet.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,15 +33,16 @@ public class SettingController {
         }
     }
 
-
-    //Create Setting
-    public Setting create (Setting s) {
+    //Create Session
+    public Sessions create (Sessions s) {
         try {
             rowSet.moveToInsertRow();
-            rowSet.updateInt("settingID", s.getSettingID());
-            rowSet.updateInt("gearNumber", s.getGearNumber());
-            rowSet.updateInt("speedLimit", s.getSpeedLimit());
+            rowSet.updateInt("seshID", s.getSeshID());
+            rowSet.updateTime("startTime", s.getStartTime());
+            rowSet.updateTime("endTime", s.getEndTime());
             rowSet.updateInt("testerID", s.getTesterID());
+            rowSet.updateInt("carID", s.getCarID());
+            rowSet.updateInt("settingID", s.getSettingID());
             rowSet.insertRow();
             rowSet.moveToCurrentRow();
         } catch (SQLException e) {
@@ -58,13 +58,15 @@ public class SettingController {
         return s;
     }
 
-    //Update Setting
-    public Setting update (Setting s) {
+    //Update Sessions
+    public Sessions update (Sessions s) {
         try {
-            rowSet.updateInt("settingID", s.getSettingID());
-            rowSet.updateInt("gearNumber", s.getGearNumber());
-            rowSet.updateInt("speedLimit", s.getSpeedLimit());
+            rowSet.updateInt("seshID", s.getSeshID());
+            rowSet.updateTime("startTime", s.getStartTime());
+            rowSet.updateTime("endTime", s.getEndTime());
             rowSet.updateInt("testerID", s.getTesterID());
+            rowSet.updateInt("carID", s.getCarID());
+            rowSet.updateInt("settingID", s.getSettingID());
             rowSet.updateRow();
             rowSet.moveToCurrentRow();
         } catch (SQLException e) {
@@ -78,22 +80,24 @@ public class SettingController {
         return s;
     }
 
-    //Retrieve Setting
-    public Setting currSession() {
-        Setting s = new Setting();
+    //Retrieve Session
+    public Sessions currSession() {
+        Sessions s = new Sessions();
         try {
             rowSet.moveToCurrentRow();
-            rowSet.setInt("settingID", s.getSettingID());
-            rowSet.setInt("gearNumber", s.getGearNumber());
-            rowSet.setInt("speedLimit", s.getSpeedLimit());
+            rowSet.setInt("seshID", s.getSeshID());
+            rowSet.setTime("startTime", s.getStartTime());
+            rowSet.setTime("endTime", s.getEndTime());
             rowSet.setInt("testerID", s.getTesterID());
+            rowSet.setInt("carID", s.getCarID());
+            rowSet.setInt("settingID", s.getSettingID());
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return s;
     }
 
-    //Delete Setting
+    //Delete Session
     public void delete() {
         try {
             rowSet.moveToCurrentRow();

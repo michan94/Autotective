@@ -1,12 +1,13 @@
-package controllers;
+package controller;
 
 import com.sun.rowset.JdbcRowSetImpl;
+import entity.Setting;
 import entity.Tester;
 
 import javax.sql.rowset.JdbcRowSet;
 import java.sql.SQLException;
 
-public class TesterController {
+public class SettingController {
     //JDBC drive name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/Autotective";
@@ -17,47 +18,53 @@ public class TesterController {
 
     private JdbcRowSet rowSet = null;
 
-    public TesterController() {
+    public SettingController() {
         try {
             Class.forName(JDBC_DRIVER);
             rowSet = new JdbcRowSetImpl();
             rowSet.setUrl(DB_URL);
             rowSet.setUsername(USER);
             rowSet.setPassword(PASS);
-            rowSet.setCommand("select * from tester");
+            rowSet.setCommand("select * from settings");
             rowSet.execute();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } catch (ClassNotFoundException e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    //Create new Tester
-    public Tester create (Tester t) {
+
+    //Create Setting
+    public Setting create (Setting s) {
         try {
             rowSet.moveToInsertRow();
-            rowSet.updateInt("testerID", t.getTesterID());
-            rowSet.updateString("name", t.getName());
+            rowSet.updateInt("settingID", s.getSettingID());
+            rowSet.updateInt("gearNumber", s.getGearNumber());
+            rowSet.updateInt("speedLimit", s.getSpeedLimit());
+            rowSet.updateInt("testerID", s.getTesterID());
             rowSet.insertRow();
             rowSet.moveToCurrentRow();
         } catch (SQLException e) {
             try {
                 rowSet.rollback();
-                t = null;
+                s = null;
             } catch (SQLException e1) {
                 e1.printStackTrace();
                 return null;
             }
+            e.printStackTrace();
         }
-        return t;
+        return s;
     }
 
-    //Update Tester
-    public Tester update (Tester t) {
+    //Update Setting
+    public Setting update (Setting s) {
         try {
-            rowSet.updateInt("testerID", t.getTesterID());
-            rowSet.updateString("name", t.getName());
+            rowSet.updateInt("settingID", s.getSettingID());
+            rowSet.updateInt("gearNumber", s.getGearNumber());
+            rowSet.updateInt("speedLimit", s.getSpeedLimit());
+            rowSet.updateInt("testerID", s.getTesterID());
             rowSet.updateRow();
             rowSet.moveToCurrentRow();
         } catch (SQLException e) {
@@ -68,23 +75,25 @@ public class TesterController {
             }
             e.printStackTrace();
         }
-        return t;
+        return s;
     }
 
-    //Retrieve Tester
-    public Tester currTester() {
-        Tester t = new Tester();
+    //Retrieve Setting
+    public Setting currSession() {
+        Setting s = new Setting();
         try {
             rowSet.moveToCurrentRow();
-            t.setTesterID(rowSet.getInt("testerID"));
-            t.setName(rowSet.getString("name"));
+            rowSet.setInt("settingID", s.getSettingID());
+            rowSet.setInt("gearNumber", s.getGearNumber());
+            rowSet.setInt("speedLimit", s.getSpeedLimit());
+            rowSet.setInt("testerID", s.getTesterID());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return t;
+        return s;
     }
 
-    //Delete Tester
+    //Delete Setting
     public void delete() {
         try {
             rowSet.moveToCurrentRow();
@@ -98,7 +107,4 @@ public class TesterController {
             e.printStackTrace();
         }
     }
-
-
 }
-

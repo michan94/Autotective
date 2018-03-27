@@ -1,12 +1,12 @@
-package controllers;
+package controller;
 
 import com.sun.rowset.JdbcRowSetImpl;
-import entity.Sessions;
+import entity.Tester;
 
 import javax.sql.rowset.JdbcRowSet;
 import java.sql.SQLException;
 
-public class SessionsController {
+public class TesterController {
     //JDBC drive name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/Autotective";
@@ -17,56 +17,47 @@ public class SessionsController {
 
     private JdbcRowSet rowSet = null;
 
-    public SessionsController() {
+    public TesterController() {
         try {
             Class.forName(JDBC_DRIVER);
             rowSet = new JdbcRowSetImpl();
             rowSet.setUrl(DB_URL);
             rowSet.setUsername(USER);
             rowSet.setPassword(PASS);
-            rowSet.setCommand("select * from sessions");
+            rowSet.setCommand("select * from tester");
             rowSet.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    //Create Session
-    public Sessions create (Sessions s) {
+    //Create new Tester
+    public Tester create (Tester t) {
         try {
             rowSet.moveToInsertRow();
-            rowSet.updateInt("seshID", s.getSeshID());
-            rowSet.updateTime("startTime", s.getStartTime());
-            rowSet.updateTime("endTime", s.getEndTime());
-            rowSet.updateInt("testerID", s.getTesterID());
-            rowSet.updateInt("carID", s.getCarID());
-            rowSet.updateInt("settingID", s.getSettingID());
+            rowSet.updateInt("testerID", t.getTesterID());
+            rowSet.updateString("name", t.getName());
             rowSet.insertRow();
             rowSet.moveToCurrentRow();
         } catch (SQLException e) {
             try {
                 rowSet.rollback();
-                s = null;
+                t = null;
             } catch (SQLException e1) {
                 e1.printStackTrace();
                 return null;
             }
-            e.printStackTrace();
         }
-        return s;
+        return t;
     }
 
-    //Update Sessions
-    public Sessions update (Sessions s) {
+    //Update Tester
+    public Tester update (Tester t) {
         try {
-            rowSet.updateInt("seshID", s.getSeshID());
-            rowSet.updateTime("startTime", s.getStartTime());
-            rowSet.updateTime("endTime", s.getEndTime());
-            rowSet.updateInt("testerID", s.getTesterID());
-            rowSet.updateInt("carID", s.getCarID());
-            rowSet.updateInt("settingID", s.getSettingID());
+            rowSet.updateInt("testerID", t.getTesterID());
+            rowSet.updateString("name", t.getName());
             rowSet.updateRow();
             rowSet.moveToCurrentRow();
         } catch (SQLException e) {
@@ -77,27 +68,23 @@ public class SessionsController {
             }
             e.printStackTrace();
         }
-        return s;
+        return t;
     }
 
-    //Retrieve Session
-    public Sessions currSession() {
-        Sessions s = new Sessions();
+    //Retrieve Tester
+    public Tester currTester() {
+        Tester t = new Tester();
         try {
             rowSet.moveToCurrentRow();
-            rowSet.setInt("seshID", s.getSeshID());
-            rowSet.setTime("startTime", s.getStartTime());
-            rowSet.setTime("endTime", s.getEndTime());
-            rowSet.setInt("testerID", s.getTesterID());
-            rowSet.setInt("carID", s.getCarID());
-            rowSet.setInt("settingID", s.getSettingID());
+            t.setTesterID(rowSet.getInt("testerID"));
+            t.setName(rowSet.getString("name"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return s;
+        return t;
     }
 
-    //Delete Session
+    //Delete Tester
     public void delete() {
         try {
             rowSet.moveToCurrentRow();
@@ -111,4 +98,7 @@ public class SessionsController {
             e.printStackTrace();
         }
     }
+
+
 }
+

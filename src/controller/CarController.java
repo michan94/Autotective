@@ -39,7 +39,7 @@ public class CarController {
     public Car create (Car car) {
         try {
             rowSet.moveToInsertRow();
-            rowSet.updateBoolean("tested", car.isTested());
+            rowSet.updateBoolean("tested", car.getTested());
             rowSet.insertRow();
             rowSet.moveToCurrentRow();
         } catch (SQLException e) {
@@ -58,7 +58,7 @@ public class CarController {
 
     public Car update (Car car) {
         try {
-            rowSet.updateBoolean("tested", car.isTested());
+            rowSet.updateBoolean("tested", car.getTested());
             rowSet.updateRow();
             rowSet.moveToCurrentRow();
         } catch (SQLException e) {

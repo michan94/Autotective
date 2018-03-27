@@ -39,7 +39,7 @@ public class SensorController {
     public Sensor create (Sensor sensor) {
         try {
             rowSet.moveToInsertRow();
-            rowSet.updateBoolean("status", sensor.isStatus());
+            rowSet.updateBoolean("status", sensor.getStatus());
             rowSet.updateString("sensType", sensor.getSensType());
             rowSet.updateInt("carID", sensor.getCarID());
             rowSet.insertRow();
@@ -60,7 +60,7 @@ public class SensorController {
 
     public Sensor update (Sensor sensor) {
         try {
-            rowSet.updateBoolean("status", sensor.isStatus());
+            rowSet.updateBoolean("status", sensor.getStatus());
             rowSet.updateRow();
             rowSet.moveToCurrentRow();
         } catch (SQLException e) {
