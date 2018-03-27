@@ -5,7 +5,7 @@ package entity;
  */
 public class Sensor {
     private String sensType;
-    private String status;
+    private Boolean status;
     private int carID;
 
     public String getSensType() {
@@ -16,11 +16,11 @@ public class Sensor {
         this.sensType = sensType;
     }
 
-    public String isStatus() {
+    public Boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
