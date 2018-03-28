@@ -1,11 +1,11 @@
-package entity;
+package Autotective.entity;
 
 /**
  * Created by Mitchell Chan on 2018-03-23.
  */
 public class Car {
     private int carID;
-    private String tested;
+    private boolean tested;
 
     public int getCarID() {
         return carID;
@@ -15,11 +15,12 @@ public class Car {
         this.carID = carID;
     }
 
-    public String isTested() {
+
+    public boolean getTested() {
         return tested;
     }
 
-    public void setTested(String tested) {
+    public void setTested(boolean tested) {
         this.tested = tested;
     }
 }

@@ -1,11 +1,11 @@
-package entity;
+package Autotective.entity;
 
 /**
  * Created by Mitchell Chan on 2018-03-23.
  */
 public class Sensor {
     private String sensType;
-    private String status;
+    private boolean status;
     private int carID;
 
     public String getSensType() {
@@ -16,11 +16,12 @@ public class Sensor {
         this.sensType = sensType;
     }
 
-    public String isStatus() {
+
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

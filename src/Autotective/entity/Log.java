@@ -1,4 +1,4 @@
-package entity;
+package Autotective.entity;
 
 import java.sql.*;
 

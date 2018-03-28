@@ -10,6 +10,11 @@ package Autotective.UI;
  * @author ege
  */
 public class EngineerUI extends javax.swing.JFrame {
+    CarInventoryUI carInventoryWindow;
+    SensorsUI sensorReportWindow;
+    TestsUI testHistoryWindow;
+    AddTesterUI addTesterWindow;
+    
 
     /**
      * Creates new form EngineerUI
@@ -40,6 +45,11 @@ public class EngineerUI extends javax.swing.JFrame {
         jLabel1.setText("Welcome Engineer,");
 
         queryAllButton.setText("Car Inventory");
+        queryAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                queryAllButtonActionPerformed(evt);
+            }
+        });
 
         sessionsButton.setText("See tests conducted");
         sessionsButton.addActionListener(new java.awt.event.ActionListener() {
@@ -49,8 +59,18 @@ public class EngineerUI extends javax.swing.JFrame {
         });
 
         sensorCheckButton.setText("Sensors Report");
+        sensorCheckButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sensorCheckButtonActionPerformed(evt);
+            }
+        });
 
         addTesterButton.setText("Add Tester");
+        addTesterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTesterButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -95,11 +115,41 @@ public class EngineerUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // Goes to TestHistory Window
     private void sessionsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sessionsButtonActionPerformed
-        // TODO add your handling code here:
+       testHistoryWindow = new TestsUI();
+        testHistoryWindow.backWindow = this;
+        testHistoryWindow.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_sessionsButtonActionPerformed
+
+    // Goes to Car Query Window
+    private void queryAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryAllButtonActionPerformed
+        carInventoryWindow = new CarInventoryUI();
+        carInventoryWindow.backWindow = this;
+        carInventoryWindow.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_queryAllButtonActionPerformed
+
+    // Goes to Sensor Report Window
+    private void sensorCheckButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sensorCheckButtonActionPerformed
+        addTesterWindow = new AddTesterUI();
+        addTesterWindow.backWindow = this;
+        addTesterWindow.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_sensorCheckButtonActionPerformed
+
+    
+    // Goes to Tester Add Window
+    private void addTesterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTesterButtonActionPerformed
+        sensorReportWindow = new SensorsUI();
+        sensorReportWindow.backWindow = this;
+        sensorReportWindow.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_addTesterButtonActionPerformed
 
     /**
      * @param args the command line arguments

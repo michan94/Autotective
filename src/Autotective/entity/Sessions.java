@@ -7,8 +7,8 @@ import java.sql.Time;
  */
 public class Sessions {
     private int seshID;
-    private Time startTime; //Unsure if will work?
-    private Time endTime; //Unsure if will work?
+    private Time startTime;
+    private Time endTime;
     private int testerID;
     private int carID;
     private int settingID;

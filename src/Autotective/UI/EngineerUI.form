@@ -6,7 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -83,6 +83,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Car Inventory"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="queryAllButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="sessionsButton">
           <Properties>
@@ -96,11 +99,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Sensors Report"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sensorCheckButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="addTesterButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Add Tester"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addTesterButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
