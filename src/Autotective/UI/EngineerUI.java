@@ -28,19 +28,59 @@ public class EngineerUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        queryAllButton = new javax.swing.JButton();
+        sessionsButton = new javax.swing.JButton();
+        sensorCheckButton = new javax.swing.JButton();
+        addTesterButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(700, 600));
+
+        jLabel1.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        jLabel1.setText("Welcome Engineer,");
+
+        queryAllButton.setText("Car Inventory");
+
+        sessionsButton.setText("See tests conducted");
+        sessionsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sessionsButtonActionPerformed(evt);
+            }
+        });
+
+        sensorCheckButton.setText("Sensors Report");
+
+        addTesterButton.setText("Add Tester");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(sessionsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(queryAllButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(sensorCheckButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addTesterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(329, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(96, 96, 96)
+                .addComponent(jLabel1)
+                .addGap(155, 155, 155)
+                .addComponent(queryAllButton)
+                .addGap(18, 18, 18)
+                .addComponent(sessionsButton)
+                .addGap(18, 18, 18)
+                .addComponent(sensorCheckButton)
+                .addGap(18, 18, 18)
+                .addComponent(addTesterButton)
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -56,6 +96,10 @@ public class EngineerUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void sessionsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sessionsButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sessionsButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -93,6 +137,11 @@ public class EngineerUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addTesterButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton queryAllButton;
+    private javax.swing.JButton sensorCheckButton;
+    private javax.swing.JButton sessionsButton;
     // End of variables declaration//GEN-END:variables
 }
