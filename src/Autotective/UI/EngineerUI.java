@@ -80,12 +80,12 @@ public class EngineerUI extends javax.swing.JFrame {
                 .addGap(59, 59, 59)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(sessionsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(queryAllButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(sensorCheckButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addTesterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(329, Short.MAX_VALUE))
+                    .addComponent(addTesterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(queryAllButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(329, 329, 329))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,36 +118,44 @@ public class EngineerUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    // Goes to TestHistory Window
+    // Goes to TestHistory Window, creates a new one if it is NULL
     private void sessionsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sessionsButtonActionPerformed
-       testHistoryWindow = new TestsUI();
+        
+        if(testHistoryWindow == null){
+        testHistoryWindow = new TestsUI();}
         testHistoryWindow.backWindow = this;
         testHistoryWindow.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_sessionsButtonActionPerformed
 
-    // Goes to Car Query Window
+    // Goes to Car Query Window, creates a new one if it is NULL
     private void queryAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryAllButtonActionPerformed
-        carInventoryWindow = new CarInventoryUI();
+        
+        if(carInventoryWindow == null){
+        carInventoryWindow = new CarInventoryUI();}
         carInventoryWindow.backWindow = this;
         carInventoryWindow.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_queryAllButtonActionPerformed
 
-    // Goes to Sensor Report Window
+    // Goes to Sensor Report Window, creates a new one if it is NULL
     private void sensorCheckButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sensorCheckButtonActionPerformed
-        addTesterWindow = new AddTesterUI();
-        addTesterWindow.backWindow = this;
-        addTesterWindow.setVisible(true);
+        
+        if(sensorReportWindow == null){
+        sensorReportWindow = new SensorsUI();}
+        sensorReportWindow.backWindow = this;
+        sensorReportWindow.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_sensorCheckButtonActionPerformed
 
     
-    // Goes to Tester Add Window
+    // Goes to Tester Add Window, creates a new one if it is NULL
     private void addTesterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTesterButtonActionPerformed
-        sensorReportWindow = new SensorsUI();
-        sensorReportWindow.backWindow = this;
-        sensorReportWindow.setVisible(true);
+        if(addTesterWindow == null){
+        addTesterWindow = new AddTesterUI();}
+        addTesterWindow.backWindow = this;
+        addTesterWindow.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_addTesterButtonActionPerformed
 

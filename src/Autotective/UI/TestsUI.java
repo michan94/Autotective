@@ -82,7 +82,8 @@ public class TestsUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
+        backWindow.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**

@@ -5,6 +5,8 @@
  */
 package Autotective.UI;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ege
@@ -61,6 +63,11 @@ public class AddTesterUI extends javax.swing.JFrame {
         });
 
         saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         idLabel.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         idLabel.setText("Tester ID");
@@ -131,13 +138,35 @@ public class AddTesterUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
+        backWindow.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void testerNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testerNameFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_testerNameFieldActionPerformed
 
+    // Type check and then save the new tester
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // TODO add your handling code here:
+        if(checkFieldData()){
+        // TODO save new tester
+        }
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    
+    // Return true if testerID is integer
+    private boolean checkFieldData(){
+        try{
+            testerID = Integer.parseInt(testerIDField.getText());
+        }
+        catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "The ID can only be a number");
+            return false;
+        }
+        return true;
+    }
+    
     /**
      * @param args the command line arguments
      */
