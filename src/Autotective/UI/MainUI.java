@@ -3,8 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Autotective;
+package Autotective.UI;
 
+import Autotective.UI.MainUI;
+import Autotective.UI.StartSessionUI;
+import Autotective.UI.HistoryUI;
+import Autotective.UI.TesterUI;
+import Autotective.UI.TestingUI;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -102,10 +108,6 @@ public class MainUI extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 160, Short.MAX_VALUE)
-                .addComponent(autotectiveLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(194, 194, 194))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -118,9 +120,13 @@ public class MainUI extends javax.swing.JFrame {
                             .addComponent(passwordField)
                             .addComponent(usernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(176, 176, 176)
+                        .addComponent(autotectiveLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(111, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(296, 296, 296))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,12 +141,13 @@ public class MainUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(48, 48, 48)
+                .addGap(50, 50, 50)
                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         autotectiveLabel.getAccessibleContext().setAccessibleName("jLabel1");
+        loginButton.getAccessibleContext().setAccessibleName("loginButton");
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 600));
 
@@ -156,15 +163,17 @@ public class MainUI extends javax.swing.JFrame {
         // TODO
         // connect it to the database to check username and password
         if( (username.contentEquals("user")) && password.contentEquals("pass")){
-            JOptionPane.showMessageDialog(jFrame2, "Login successful!");
+            //JOptionPane.showMessageDialog(jFrame2, "Login successful!");
             
-            new StartSessionUI().setVisible(true);
+            TesterUI tester = new TesterUI();
+            tester.setVisible(true);
+            tester.backWindow = this;
             this.setVisible(false);
             
         }
         
         // Show "Login Unsuccessful" in a pop-up window
-        else JOptionPane.showMessageDialog(jFrame2, "Login unsuccessful!");
+        else JOptionPane.showMessageDialog(jFrame2, "Username/Password Invalid");
     }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
