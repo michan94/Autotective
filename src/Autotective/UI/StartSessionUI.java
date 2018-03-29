@@ -10,6 +10,8 @@ import Autotective.UI.StartSessionUI;
 import Autotective.UI.HistoryUI;
 import Autotective.UI.TesterUI;
 import Autotective.UI.TestingUI;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -37,6 +39,7 @@ public class StartSessionUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrame1 = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -49,8 +52,19 @@ public class StartSessionUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        usernameField = new javax.swing.JTextField();
+        timeField = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,7 +131,13 @@ public class StartSessionUI extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Heiti SC", 1, 24)); // NOI18N
         jLabel5.setText("Enter Current Time [HH:MM:00]");
 
-        usernameField.setPreferredSize(new java.awt.Dimension(200, 40));
+        timeField.setFont(new java.awt.Font("Heiti SC", 0, 12)); // NOI18N
+        timeField.setPreferredSize(new java.awt.Dimension(200, 40));
+        timeField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timeFieldActionPerformed(evt);
+            }
+        });
 
         jButton5.setFont(new java.awt.Font("Heiti TC", 0, 20)); // NOI18N
         jButton5.setText("Back");
@@ -147,7 +167,7 @@ public class StartSessionUI extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(276, 276, 276)
-                        .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(timeField, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -210,7 +230,7 @@ public class StartSessionUI extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(timeField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -222,6 +242,7 @@ public class StartSessionUI extends javax.swing.JFrame {
         jComboBox1.getAccessibleContext().setAccessibleName("cMenu");
         jLabel2.getAccessibleContext().setAccessibleName("tCar");
         jComboBox2.getAccessibleContext().setAccessibleName("");
+        timeField.getAccessibleContext().setAccessibleName("timeField");
         jButton5.getAccessibleContext().setAccessibleName("backButton");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -260,9 +281,23 @@ public class StartSessionUI extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
        //BACK BUTTON;
-//       this.setVisible(false);
-//       testerWindow.setVisible(true);
+       this.setVisible(false);
+       testerWindow.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void timeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeFieldActionPerformed
+        // TODO add your handling code here:
+        //TIME FIELD
+        String timeTF = timeField.getText();
+        
+        boolean checkFormat;
+
+        if (timeTF.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})"))
+                checkFormat=true;
+            else
+            checkFormat=false;
+            JOptionPane.showMessageDialog(jFrame1, "Username/Password Invalid");
+    }//GEN-LAST:event_timeFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -308,12 +343,13 @@ public class StartSessionUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField usernameField;
+    private javax.swing.JTextField timeField;
     // End of variables declaration//GEN-END:variables
 }

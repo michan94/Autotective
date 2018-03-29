@@ -169,7 +169,6 @@ public class MainUI extends javax.swing.JFrame {
             tester.setVisible(true);
             tester.backWindow = this;
             this.setVisible(false);
-            
         }
         
         // Show "Login Unsuccessful" in a pop-up window

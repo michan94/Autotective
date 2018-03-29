@@ -21,7 +21,7 @@ public class TesterUI extends javax.swing.JFrame {
    
     public MainUI backWindow;
     public StartSessionUI testACarWindow;
-    public HistoryUI toHistoryWindow;
+    public HistoryUI viewHistoryWindow;
     /**
      * Creates new form TesterUI
      */
@@ -40,7 +40,6 @@ public class TesterUI extends javax.swing.JFrame {
 
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         autotectiveLabel2 = new javax.swing.JLabel();
         autotectiveLabel3 = new javax.swing.JLabel();
@@ -51,20 +50,6 @@ public class TesterUI extends javax.swing.JFrame {
         jMenu1.setText("jMenu1");
 
         jMenu2.setText("jMenu2");
-
-        jButton3.setFont(new java.awt.Font("Heiti TC", 0, 20)); // NOI18N
-        jButton3.setText("Test a Car");
-        jButton3.setToolTipText("");
-        jButton3.setActionCommand("Sign Up");
-        jButton3.setMaximumSize(new java.awt.Dimension(95, 40));
-        jButton3.setMinimumSize(new java.awt.Dimension(95, 40));
-        jButton3.setPreferredSize(new java.awt.Dimension(95, 40));
-        jButton3.setSize(new java.awt.Dimension(97, 40));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,6 +90,11 @@ public class TesterUI extends javax.swing.JFrame {
         jButton4.setMinimumSize(new java.awt.Dimension(95, 40));
         jButton4.setPreferredSize(new java.awt.Dimension(95, 40));
         jButton4.setSize(new java.awt.Dimension(97, 40));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setFont(new java.awt.Font("Heiti TC", 0, 20)); // NOI18N
         jButton5.setText("Back");
@@ -178,20 +168,6 @@ public class TesterUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        //VIEW HISTORY BUTTON
-//        this.setVisible(false);
-//        toHistory = new HistoryUI();
-//        toHistory.setVisible(true);
-
- if(toHistoryWindow == null){
-        toHistoryWindow = new HistoryUI();}
-        toHistoryWindow.backToTesterWindow = this;
-        toHistoryWindow.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         //BACK BUTTON; GOES BACK TO MainUI
@@ -202,10 +178,28 @@ public class TesterUI extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         // TEST A CAR BUTTON
-        this.setVisible(false);
-        testACarWindow = new StartSessionUI();
+        if(testACarWindow == null)
+            testACarWindow = new StartSessionUI();
         testACarWindow.setVisible(true);
+        testACarWindow.testerWindow = this;
+        this.setVisible(false);
+  
+        
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        // VIEW HISTORY BUTTON 
+        
+        if(viewHistoryWindow == null)
+            viewHistoryWindow = new HistoryUI();
+        viewHistoryWindow.setVisible(true);
+        viewHistoryWindow.testerWindow = this;
+        this.setVisible(false);
+//        this.setVisible(false);
+//        viewHistory = new HistoryUI();
+//        viewHistory.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,7 +240,6 @@ public class TesterUI extends javax.swing.JFrame {
     private javax.swing.JLabel autotectiveLabel2;
     private javax.swing.JLabel autotectiveLabel3;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JMenu jMenu1;
