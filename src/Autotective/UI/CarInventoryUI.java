@@ -5,17 +5,31 @@
  */
 package Autotective.UI;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ege
  */
 public class CarInventoryUI extends javax.swing.JFrame {
     protected EngineerUI backWindow;
+    private int newCar;
+    
+    
+    
     /**
      * Creates new form CarInventoryUI
      */
     public CarInventoryUI() {
         initComponents();
+        
+       
+        
+        
+        
+        
     }
 
     /**
@@ -32,13 +46,18 @@ public class CarInventoryUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         carsTable = new javax.swing.JTable();
-        showAllButton = new javax.swing.JButton();
-        showTestedButton = new javax.swing.JButton();
+        showCarsButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         carIDField = new javax.swing.JTextField();
         AddCarLabel = new javax.swing.JLabel();
         carIDLabel = new javax.swing.JLabel();
         carAddButton = new javax.swing.JButton();
+        showWorkingButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        carIDBox = new javax.swing.JCheckBox();
+        testedBox = new javax.swing.JCheckBox();
+        workingBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,22 +71,31 @@ public class CarInventoryUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Helvetica", 0, 24)); // NOI18N
         jLabel1.setText("Car Inventory");
 
+        carsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "CarID", "TestDone", "Working"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         carsTable.setColumnSelectionAllowed(true);
         carsTable.setDropMode(javax.swing.DropMode.ON);
         jScrollPane1.setViewportView(carsTable);
         carsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        showAllButton.setText("Show All Cars");
-        showAllButton.addActionListener(new java.awt.event.ActionListener() {
+        showCarsButton.setText("Show Cars");
+        showCarsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showAllButtonActionPerformed(evt);
-            }
-        });
-
-        showTestedButton.setText("Show Tested");
-        showTestedButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showTestedButtonActionPerformed(evt);
+                showCarsButtonActionPerformed(evt);
             }
         });
 
@@ -117,6 +145,23 @@ public class CarInventoryUI extends javax.swing.JFrame {
                 .addContainerGap(102, Short.MAX_VALUE))
         );
 
+        showWorkingButton.setText("Show Working Properly");
+
+        deleteButton.setText("Delete Selected");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Show Cars By:");
+
+        carIDBox.setText("Car ID");
+
+        testedBox.setText("Tested");
+
+        workingBox.setText("Working");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -124,14 +169,22 @@ public class CarInventoryUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(showTestedButton)
-                                .addComponent(showAllButton)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(showWorkingButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(showCarsButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(testedBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(carIDBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(workingBox)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -146,17 +199,26 @@ public class CarInventoryUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jScrollPane1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(showAllButton)
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(showTestedButton)
-                        .addGap(55, 55, 55)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(carIDBox)
+                            .addComponent(workingBox))
+                        .addGap(18, 18, 18)
+                        .addComponent(testedBox)
+                        .addGap(13, 13, 13)
+                        .addComponent(showCarsButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(showWorkingButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteButton)
+                        .addGap(8, 8, 8)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
                 .addComponent(backButton)
                 .addContainerGap())
@@ -183,22 +245,38 @@ public class CarInventoryUI extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     
-    // Query all the tested cars, show result in the carsTable
-    private void showTestedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showTestedButtonActionPerformed
-        // TODO
-    }//GEN-LAST:event_showTestedButtonActionPerformed
-
     
     // Adds a new car to the database
     private void carAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carAddButtonActionPerformed
-        // TODO
+        if(checkFieldData()){
+        // Add it to do database as a new car.
+        }
+            
     }//GEN-LAST:event_carAddButtonActionPerformed
 
+    // Return true if testerID is integer
+    private boolean checkFieldData(){
+        try{
+            newCar = Integer.parseInt(carIDField.getText());
+        }
+        catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Please provide only a number for ID.");
+            return false;
+        }
+        return true;
+    }
     
     // Query all the cars, show the result in the carsTable
-    private void showAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllButtonActionPerformed
+    private void showCarsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showCarsButtonActionPerformed
         // TODO
-    }//GEN-LAST:event_showAllButtonActionPerformed
+    }//GEN-LAST:event_showCarsButtonActionPerformed
+
+    
+    
+    // Delete all the cars that in the table
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,14 +317,19 @@ public class CarInventoryUI extends javax.swing.JFrame {
     private javax.swing.JLabel AddCarLabel;
     private javax.swing.JButton backButton;
     private javax.swing.JButton carAddButton;
+    private javax.swing.JCheckBox carIDBox;
     private javax.swing.JTextField carIDField;
     private javax.swing.JLabel carIDLabel;
     private javax.swing.JTable carsTable;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton showAllButton;
-    private javax.swing.JButton showTestedButton;
+    private javax.swing.JButton showCarsButton;
+    private javax.swing.JButton showWorkingButton;
+    private javax.swing.JCheckBox testedBox;
+    private javax.swing.JCheckBox workingBox;
     // End of variables declaration//GEN-END:variables
 }

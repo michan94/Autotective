@@ -150,7 +150,8 @@ public class AddTesterUI extends javax.swing.JFrame {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
         if(checkFieldData()){
-        // TODO save new tester
+            testerID = Integer.parseInt(testerIDField.getText());
+            testerName = testerNameField.getText();
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
@@ -161,7 +162,7 @@ public class AddTesterUI extends javax.swing.JFrame {
             testerID = Integer.parseInt(testerIDField.getText());
         }
         catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "The ID can only be a number");
+            JOptionPane.showMessageDialog(null, "Please provide only a number for ID.");
             return false;
         }
         return true;
