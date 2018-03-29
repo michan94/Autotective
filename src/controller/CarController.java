@@ -2,6 +2,8 @@ package controller;
 
 import com.sun.rowset.JdbcRowSetImpl;
 import javax.sql.rowset.JdbcRowSet;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
 import entity.Car;
@@ -72,7 +74,7 @@ public class CarController {
         return car;
     }
 
-    public void delete() {
+    public void delete () {
         try {
             rowSet.moveToCurrentRow();
             rowSet.deleteRow();
@@ -84,5 +86,56 @@ public class CarController {
             }
             e.printStackTrace();
         }
+    }
+
+    public JTable query(String sql) {
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Car ID", "Tested"}, 0);
+        int countObjects = 0;
+        try {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                countObjects++;
+                model.addRow(new Object[]{
+                        rs.getString("car.carID"),
+                        rs.getString("car.testing")
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (countObjects == 0) {
+//            JOptionPane.showMessageDialog(null,
+//                    "No results.");
+            return null;
+        }
+        JTable resultTable = new JTable(model);
+        resultTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        return resultTable;
+    }
+
+
+    public JTable queryByCarID (int carID) {
+        String sql = String.format("SELECT * FROM car WHERE carID = %s;", carID);
+        return query(sql);
+    }
+
+    public JTable queryAvailableCars () {
+        String sql = String.format(
+                "SELECT car.carID, tested " +
+                        "FROM ( " +
+                        "SELECT distinct carID" +
+                        "FROM sensor " +
+                        "WHERE carID NOT IN ( " +
+                        "SELECT carID " +
+                        "FROM Autotective.sensor " +
+                        "WHERE status = false)) AS working_sensor " +
+                        "JOIN Autotective.car ON car.carID = working_sensor.carID " +
+                        "WHERE car.carID NOT IN ( " +
+                        "SELECT carID " +
+                        "FROM Autotective.sessions " +
+                        "WHERE endTime IS NULL)" +
+                        "AND tested = true;" +
+                        "carID);");
+        return query(sql);
     }
 }
