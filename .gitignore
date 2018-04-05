@@ -2,3 +2,4 @@
 .idea/tasks.xml
 .idea/vcs.xml
 /src/main/
+build/

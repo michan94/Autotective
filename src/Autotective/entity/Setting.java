@@ -1,4 +1,4 @@
-package entity;
+package Autotective.entity;
 
 /**
  * Created by Mitchell Chan on 2018-03-23.
@@ -8,6 +8,16 @@ public class Setting {
     private int gearNumber;
     private int speedLimit;
     private int testerID;
+    
+    public Setting(int id, int gear, int speed, int test) {
+        this.settingID = id;
+        this.gearNumber = gear;
+        this.speedLimit = speed;
+        this.testerID = test;
+    }
+    
+    public Setting() {
+    }
 
     public int getSettingID() {
         return settingID;

@@ -1,4 +1,4 @@
-package entity;
+package Autotective.entity;
 
 /**
  * Created by Mitchell Chan on 2018-03-23.
@@ -6,6 +6,14 @@ package entity;
 public class Tester {
     private int testerID;
     private String name;
+    
+    public Tester(int testerID, String name) {
+        this.testerID = testerID;
+        this.name = name;
+    }
+
+    public Tester() {
+    }
 
     public int getTesterID() {
         return testerID;

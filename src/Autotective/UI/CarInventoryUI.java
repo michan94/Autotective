@@ -5,9 +5,12 @@
  */
 package Autotective.UI;
 
+import Autotective.controller.CarController;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import Autotective.entity.Car;
 
 /**
  *
@@ -16,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
 public class CarInventoryUI extends javax.swing.JFrame {
     protected EngineerUI backWindow;
     private int newCar;
+    CarController carControl = new CarController();
+    
     
     
     
@@ -24,12 +29,10 @@ public class CarInventoryUI extends javax.swing.JFrame {
      */
     public CarInventoryUI() {
         initComponents();
-        
-       
-        
-        
-        
-        
+        carIDBox.setSelected(true);
+        testedBox.setSelected(true);
+        DefaultTableModel newModel = carControl.basicQuery(carIDBox.isSelected(), testedBox.isSelected());
+        carsTable.setModel(newModel);
     }
 
     /**
@@ -41,34 +44,37 @@ public class CarInventoryUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("Autotective?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
+        carQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM Car c");
+        carList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : carQuery.getResultList();
+        carQuery1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM Car c");
+        carList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : carQuery1.getResultList();
+        carQuery2 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM Car c");
+        carList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : carQuery2.getResultList();
+        carQuery3 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM Car c");
+        carList3 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : carQuery3.getResultList();
         jPanel1 = new javax.swing.JPanel();
-        backButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         carsTable = new javax.swing.JTable();
         showCarsButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         carIDField = new javax.swing.JTextField();
-        AddCarLabel = new javax.swing.JLabel();
         carIDLabel = new javax.swing.JLabel();
         carAddButton = new javax.swing.JButton();
-        showWorkingButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
+        showWorkingButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         carIDBox = new javax.swing.JCheckBox();
         testedBox = new javax.swing.JCheckBox();
-        workingBox = new javax.swing.JCheckBox();
+        AddCarLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        backButton.setText("Back");
-        backButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
-            }
-        });
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Helvetica", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Heiti SC", 0, 36)); // NOI18N
         jLabel1.setText("Car Inventory");
 
         carsTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -76,22 +82,16 @@ public class CarInventoryUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CarID", "TestDone", "Working"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         carsTable.setColumnSelectionAllowed(true);
         carsTable.setDropMode(javax.swing.DropMode.ON);
         jScrollPane1.setViewportView(carsTable);
         carsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        showCarsButton.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
+        showCarsButton.setForeground(new java.awt.Color(0, 153, 102));
         showCarsButton.setText("Show Cars");
         showCarsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,16 +99,44 @@ public class CarInventoryUI extends javax.swing.JFrame {
             }
         });
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        carIDField.setFont(new java.awt.Font("Heiti SC", 0, 14)); // NOI18N
+        carIDField.setForeground(new java.awt.Color(0, 153, 102));
         carIDField.setToolTipText("enter the car ID");
+        carIDField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carIDFieldActionPerformed(evt);
+            }
+        });
 
-        AddCarLabel.setText("Add a new car:");
-
+        carIDLabel.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
         carIDLabel.setText("Car ID:");
 
+        carAddButton.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
+        carAddButton.setForeground(new java.awt.Color(0, 153, 102));
         carAddButton.setText("Add");
         carAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 carAddButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
+        deleteButton.setForeground(new java.awt.Color(0, 153, 102));
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        backButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        backButton.setForeground(new java.awt.Color(0, 153, 102));
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -117,122 +145,128 @@ public class CarInventoryUI extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(carIDLabel)
+                .addGap(18, 18, 18)
+                .addComponent(carIDField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(carAddButton))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(AddCarLabel)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(carIDLabel)
-                                .addGap(39, 39, 39)
-                                .addComponent(carIDField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(carAddButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addComponent(AddCarLabel)
-                .addGap(33, 33, 33)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(carIDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(carIDLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(carIDLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(carAddButton)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(carAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        showWorkingButton.setText("Show Working Properly");
-
-        deleteButton.setText("Delete Selected");
-        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+        showWorkingButton.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
+        showWorkingButton.setForeground(new java.awt.Color(0, 153, 102));
+        showWorkingButton.setText("Show Working");
+        showWorkingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteButtonActionPerformed(evt);
+                showWorkingButtonActionPerformed(evt);
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
         jLabel2.setText("Show Cars By:");
 
+        carIDBox.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
         carIDBox.setText("Car ID");
 
+        testedBox.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
         testedBox.setText("Tested");
 
-        workingBox.setText("Working");
+        AddCarLabel.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
+        AddCarLabel.setText("Add or delete a car:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(showWorkingButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(showCarsButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel1))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(testedBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(carIDBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(workingBox)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(backButton)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19))))
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(62, 62, 62)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(AddCarLabel)
+                                        .addGap(25, 25, 25))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(showCarsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(showWorkingButton, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(carIDBox, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(testedBox))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel1)
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(carIDBox)
-                            .addComponent(workingBox))
-                        .addGap(18, 18, 18)
+                        .addComponent(carIDBox)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(testedBox)
-                        .addGap(13, 13, 13)
-                        .addComponent(showCarsButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(showWorkingButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(deleteButton)
-                        .addGap(8, 8, 8)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(showCarsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(showWorkingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
+                        .addComponent(AddCarLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
-                .addGap(18, 18, 18)
-                .addComponent(backButton)
-                .addContainerGap())
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -249,9 +283,15 @@ public class CarInventoryUI extends javax.swing.JFrame {
     // Adds a new car to the database
     private void carAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carAddButtonActionPerformed
         if(checkFieldData()){
-        // Add it to do database as a new car.
-        }
+            int newID = Integer.parseInt(carIDField.getText());
+            Car nCar = new Car(newID,false);
+            carControl.create(nCar);
             
+            DefaultTableModel newModel = carControl.basicQuery(carIDBox.isSelected(), testedBox.isSelected());
+            carsTable.setModel(newModel);
+            
+            
+        }       
     }//GEN-LAST:event_carAddButtonActionPerformed
 
     // Return true if testerID is integer
@@ -268,15 +308,31 @@ public class CarInventoryUI extends javax.swing.JFrame {
     
     // Query all the cars, show the result in the carsTable
     private void showCarsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showCarsButtonActionPerformed
-        // TODO
+        DefaultTableModel newModel = carControl.basicQuery(carIDBox.isSelected(), testedBox.isSelected());
+        carsTable.setModel(newModel);
     }//GEN-LAST:event_showCarsButtonActionPerformed
 
     
     
     // Delete all the cars that in the table
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
+        if(checkFieldData()){
+            int id = Integer.parseInt(carIDField.getText());
+            carControl.deleteByID(id);
+            DefaultTableModel newModel = carControl.basicQuery(carIDBox.isSelected(), testedBox.isSelected());
+            carsTable.setModel(newModel);
+            
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void showWorkingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showWorkingButtonActionPerformed
+        DefaultTableModel newModel = carControl.queryAvailableCars(carIDBox.isSelected(), testedBox.isSelected());
+        carsTable.setModel(newModel);
+    }//GEN-LAST:event_showWorkingButtonActionPerformed
+
+    private void carIDFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carIDFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_carIDFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -320,8 +376,17 @@ public class CarInventoryUI extends javax.swing.JFrame {
     private javax.swing.JCheckBox carIDBox;
     private javax.swing.JTextField carIDField;
     private javax.swing.JLabel carIDLabel;
+    private java.util.List<Autotective.UI.Car> carList;
+    private java.util.List<Autotective.UI.Car> carList1;
+    private java.util.List<Autotective.UI.Car> carList2;
+    private java.util.List<Autotective.UI.Car> carList3;
+    private javax.persistence.Query carQuery;
+    private javax.persistence.Query carQuery1;
+    private javax.persistence.Query carQuery2;
+    private javax.persistence.Query carQuery3;
     private javax.swing.JTable carsTable;
     private javax.swing.JButton deleteButton;
+    private javax.persistence.EntityManager entityManager;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -330,6 +395,5 @@ public class CarInventoryUI extends javax.swing.JFrame {
     private javax.swing.JButton showCarsButton;
     private javax.swing.JButton showWorkingButton;
     private javax.swing.JCheckBox testedBox;
-    private javax.swing.JCheckBox workingBox;
     // End of variables declaration//GEN-END:variables
 }

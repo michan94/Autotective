@@ -6,6 +6,11 @@ package Autotective.entity;
 public class Car {
     private int carID;
     private boolean tested;
+    
+    public Car(int carID, boolean tested) {
+        this.carID = carID;
+        this.tested = tested;
+    }
 
     public int getCarID() {
         return carID;

@@ -5,18 +5,24 @@
  */
 package Autotective.UI;
 
+import Autotective.controller.LogController;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ege
  */
 public class SpeedUI extends javax.swing.JFrame {
     protected SensorsUI backWindow;
+    LogController logControl = new LogController();
 
     /**
      * Creates new form SpeedUI
      */
     public SpeedUI() {
         initComponents();
+        DefaultTableModel newModel = logControl.avgSpeedQuery();
+        averageSpeed.setModel(newModel);
     }
 
     /**
@@ -29,26 +35,21 @@ public class SpeedUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        backButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         averageSpeed = new javax.swing.JTable();
         showMaxSpeedButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
+        showMinSpeedButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        showMaxSpeedLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 600));
 
-        backButton.setText("Back");
-        backButton.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        backButton.setLocation(new java.awt.Point(600, 550));
-        backButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
-            }
-        });
-
+        averageSpeed.setFont(new java.awt.Font("Heiti SC", 0, 12)); // NOI18N
         averageSpeed.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -59,50 +60,78 @@ public class SpeedUI extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(averageSpeed);
 
-        showMaxSpeedButton.setText("Show Maximum Speed");
+        showMaxSpeedButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        showMaxSpeedButton.setForeground(new java.awt.Color(0, 153, 102));
+        showMaxSpeedButton.setText("Maximum Speed");
         showMaxSpeedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showMaxSpeedButtonActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Max Speed:");
+        backButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        backButton.setForeground(new java.awt.Color(0, 153, 102));
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
 
-        showMaxSpeedLabel.setText("0");
+        showMinSpeedButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        showMinSpeedButton.setForeground(new java.awt.Color(0, 153, 102));
+        showMinSpeedButton.setText("Minimum Speed");
+        showMinSpeedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showMinSpeedButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Heiti SC", 0, 36)); // NOI18N
+        jLabel1.setText("Speed");
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Autotective/UI/smaller.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(backButton)
-                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(showMaxSpeedButton)
-                        .addGap(84, 84, 84)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(showMaxSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(125, Short.MAX_VALUE))
+                        .addComponent(showMaxSpeedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
+                        .addComponent(showMinSpeedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(40, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(293, 293, 293)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(43, 43, 43)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(showMaxSpeedButton)
-                    .addComponent(jLabel1)
-                    .addComponent(showMaxSpeedLabel))
-                .addGap(27, 27, 27)
-                .addComponent(backButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(showMaxSpeedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(showMinSpeedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
 
         showMaxSpeedButton.getAccessibleContext().setAccessibleName("");
@@ -111,28 +140,36 @@ public class SpeedUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 6, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        backWindow.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_backButtonActionPerformed
 
     
     // Displays the average speed by sensor type
     private void showMaxSpeedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showMaxSpeedButtonActionPerformed
-        // TODO 
+        DefaultTableModel newModel = logControl.maxSpeedQuery();
+        averageSpeed.setModel(newModel);
     }//GEN-LAST:event_showMaxSpeedButtonActionPerformed
+
+    
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+       backWindow.setVisible(true);
+       this.setVisible(false);
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void showMinSpeedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showMinSpeedButtonActionPerformed
+        DefaultTableModel newModel = logControl.minSpeedQuery();
+        averageSpeed.setModel(newModel);
+    }//GEN-LAST:event_showMinSpeedButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,9 +210,10 @@ public class SpeedUI extends javax.swing.JFrame {
     private javax.swing.JTable averageSpeed;
     private javax.swing.JButton backButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton showMaxSpeedButton;
-    private javax.swing.JLabel showMaxSpeedLabel;
+    private javax.swing.JButton showMinSpeedButton;
     // End of variables declaration//GEN-END:variables
 }

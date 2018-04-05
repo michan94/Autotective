@@ -5,13 +5,38 @@
  */
 package Autotective.UI;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Charlotte
  */
 public class MainUI extends javax.swing.JFrame {
+    TesterUI testerWindow;
+    EngineerUI engineerWindow;
+    String testerNAME;
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/autotective";
+    //Database credentials
+    static final String USER = "root";
+    static final String PASS = "testpass";
+    
+    JComboBox jc = new JComboBox();
+    JPanel panel = new JPanel();
+    Connection con;
+    Statement st;
+    ResultSet rs;
+    
+    
     
 
     /**
@@ -41,6 +66,7 @@ public class MainUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
         engineerButton = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jFrame1.setTitle("Autotective");
 
@@ -69,7 +95,7 @@ public class MainUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(0, 204, 0));
         jPanel1.setToolTipText("");
         jPanel1.setFont(new java.awt.Font("Heiti SC", 0, 13)); // NOI18N
@@ -80,7 +106,8 @@ public class MainUI extends javax.swing.JFrame {
         autotectiveLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         autotectiveLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
-        loginButton.setFont(new java.awt.Font("Heiti TC", 0, 20)); // NOI18N
+        loginButton.setFont(new java.awt.Font("Heiti TC", 1, 24)); // NOI18N
+        loginButton.setForeground(new java.awt.Color(0, 153, 102));
         loginButton.setText("Login");
         loginButton.setMaximumSize(new java.awt.Dimension(95, 40));
         loginButton.setMinimumSize(new java.awt.Dimension(95, 40));
@@ -92,6 +119,8 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
+        usernameField.setFont(new java.awt.Font("Heiti SC", 0, 14)); // NOI18N
+        usernameField.setForeground(new java.awt.Color(0, 153, 102));
         usernameField.setPreferredSize(new java.awt.Dimension(200, 40));
 
         jLabel2.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
@@ -100,49 +129,64 @@ public class MainUI extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
         jLabel3.setText("Password");
 
+        passwordField.setFont(new java.awt.Font("Heiti SC", 0, 14)); // NOI18N
+
+        engineerButton.setFont(new java.awt.Font("Heiti SC", 0, 14)); // NOI18N
         engineerButton.setText("Engineer Login");
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Autotective/UI/images.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 160, Short.MAX_VALUE)
-                .addComponent(autotectiveLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(194, 194, 194))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(103, 103, 103)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(163, 163, 163)
                         .addComponent(engineerButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(passwordField)
-                    .addComponent(usernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
-                .addContainerGap(111, Short.MAX_VALUE))
+                        .addGap(70, 70, 70)
+                        .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(95, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(225, 225, 225))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(autotectiveLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(163, 163, 163))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(161, 161, 161)
-                .addComponent(autotectiveLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
+                .addGap(44, 44, 44)
+                .addComponent(jLabel1)
+                .addGap(17, 17, 17)
+                .addComponent(autotectiveLabel)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(55, 55, 55)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(48, 48, 48)
+                    .addComponent(jLabel3)
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(engineerButton))
-                .addContainerGap())
+                    .addComponent(engineerButton)
+                    .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(194, 194, 194))
         );
 
         autotectiveLabel.getAccessibleContext().setAccessibleName("jLabel1");
@@ -156,29 +200,60 @@ public class MainUI extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String username = usernameField.getText();
         String password = passwordField.getText();
+        boolean userFlag = false;
         
-        //Check for password and username
-        // TODO
-        // connect it to the database to check username and password
+        //hardcoded "user" and "pass" ... always works
         if( (username.contentEquals("user")) && password.contentEquals("pass")){
-            JOptionPane.showMessageDialog(jFrame2, "Login successful!");
-            
-            new StartSessionUI().setVisible(true);
-            this.setVisible(false);
-            
-        }
-        
-        else if( (username.contentEquals("engineer")) && password.contentEquals("pass")
+            userFlag = true;
+            if(testerWindow == null) {
+                testerWindow = new TesterUI();
+            } 
+//            testerNAME = username;
+//            testerWindow.autotectiveLabel2.setText(username);
+            testerWindow.setVisible(true);
+            testerWindow.backWindow=this;
+            this.setVisible(false); 
+
+        //hardcoded "engineer" and "pass" ... always works    
+        } else if( (username.contentEquals("engineer")) && password.contentEquals("pass")
                 && engineerButton.isSelected() ){
-            JOptionPane.showMessageDialog(jFrame2, "Login successful!");
-            
-            new EngineerUI().setVisible(true);
+            userFlag = true;
+          if(engineerWindow == null) {
+                engineerWindow = new EngineerUI();
+          }      
+            engineerWindow.setVisible(true);
+            engineerWindow.backWindow = this;
             this.setVisible(false);
-            
         }
         
-        // Show "Login Unsuccessful" in a pop-up window
-        else JOptionPane.showMessageDialog(jFrame2, "Login unsuccessful!");
+        //QUERY TIME! If username is in database, login successful!
+        //If username doesn't exist, show popup "Invalid username/password"
+        else {
+        try{
+                con = DriverManager.getConnection(DB_URL,USER,PASS);
+                st = con.createStatement();
+                String s = "select testerID from Tester;";
+                rs = st.executeQuery(s);
+                while (rs.next()) {
+                    if (rs.getString(1).equals(username)) {
+                        userFlag = true;
+                        if(testerWindow == null) {
+                            testerWindow = new TesterUI();
+                        } 
+//                        testerNAME = username;
+//                        testerWindow.autotectiveLabel2.setText(username);
+                        testerWindow.setVisible(true);
+                        testerWindow.backWindow=this;
+                        this.setVisible(false);
+                    }   
+            }
+        }catch(SQLException e) {  
+            }
+        }
+        
+        //IF NONE OF THE ABOVE WORK, THEN PRODUCE ERROR MESSAGE
+        if (userFlag != true)
+            JOptionPane.showMessageDialog(null, "Invalid username/password");
     }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
@@ -221,11 +296,12 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JRadioButton engineerButton;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField passwordField;
-    private javax.swing.JTextField usernameField;
+    public javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }

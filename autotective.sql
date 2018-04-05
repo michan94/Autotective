@@ -40,7 +40,7 @@ create table log (
 	brake int NOT NULL,
 	typeOf VARCHAR(7) NOT NULL,
 	seshID int NOT NULL,
-	FOREIGN KEY (SeshID) REFERENCES Session (SeshID)
+	FOREIGN KEY (SeshID) REFERENCES Sessions (SeshID)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
@@ -55,17 +55,17 @@ create table sessions (
 	seshID int PRIMARY KEY AUTO_INCREMENT,
 	startTime TIME NOT NULL,
 	endTime TIME,
-	testerID int NOT NULL,
-	carID int NOT NULL,
-	settingID int NOT NULL,
+	testerID int,
+	carID int,
+	settingID int,
 	FOREIGN KEY (TesterID) REFERENCES Tester (testerID)
-		ON DELETE CASCADE
+		ON DELETE SET NULL
 		ON UPDATE CASCADE,
 	FOREIGN KEY (SettingID) REFERENCES Setting (SettingID)
-		ON DELETE NO ACTION
+		ON DELETE SET NULL
 		ON UPDATE CASCADE,
 	FOREIGN KEY (CarID) REFERENCES Car (CarID)
-		ON DELETE NO ACTION
+		ON DELETE SET NULL
 		ON UPDATE CASCADE
 );
 
@@ -90,11 +90,11 @@ insert into car (tested) values (false);
 insert into car (tested) values (true);
 insert into car (tested) values (false);
 insert into car (tested) values (false);
+insert into car (tested) values (false);
 insert into car (tested) values (true);
+insert into car (tested) values (false);
+insert into car (tested) values (false);
 insert into car (tested) values (true);
-insert into car (tested) values (false);
-insert into car (tested) values (false);
-insert into car (tested) values (false);
 
 insert into tester (fullName) values ('Davey Ullett');
 insert into tester (fullName) values ('Karina Matthiesen');
@@ -199,6 +199,8 @@ insert into sensor (senstypeOf, status, carID) values ('gps', true, 10);
 insert into sensor (senstypeOf, status, carID) values ('vision', false, 10);
 insert into sensor (senstypeOf, status, carID) values ('temperature', false, 1);
 insert into sensor (senstypeOf, status, carID) values ('gps', false, 4);
+insert into sensor (senstypeOf, status, carID) values ('gps', true, 19);
+insert into sensor (senstypeOf, status, carID) values ('vision', true, 16);
 
 insert into setting (gearNumber, speedLimit, testerID) values (4, 2, 7);
 insert into setting (gearNumber, speedLimit, testerID) values (0, 4, 6);

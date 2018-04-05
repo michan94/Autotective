@@ -5,6 +5,9 @@
  */
 package Autotective.UI;
 
+import Autotective.controller.LogController;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ege
@@ -12,11 +15,14 @@ package Autotective.UI;
 public class SensorsUI extends javax.swing.JFrame {
     protected EngineerUI backWindow;
     protected SpeedUI speedWindow;
+    LogController logControl = new LogController();
     /**
      * Creates new form SensorsUI
      */
     public SensorsUI() {
         initComponents();
+        DefaultTableModel newModel = logControl.basicQuery();
+        logsTable.setModel(newModel);
     }
 
     /**
@@ -32,12 +38,17 @@ public class SensorsUI extends javax.swing.JFrame {
         backButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        sensorsTable = new javax.swing.JTable();
-        showSensorsButton = new javax.swing.JButton();
+        logsTable = new javax.swing.JTable();
+        showLogsButton = new javax.swing.JButton();
         inspectSpeedButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        backButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        backButton.setForeground(new java.awt.Color(0, 153, 102));
         backButton.setText("Back");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -45,10 +56,11 @@ public class SensorsUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Helvetica", 0, 24)); // NOI18N
-        jLabel1.setText("Sensor Report");
+        jLabel1.setFont(new java.awt.Font("Heiti SC", 0, 36)); // NOI18N
+        jLabel1.setText("Log Report");
 
-        sensorsTable.setModel(new javax.swing.table.DefaultTableModel(
+        logsTable.setFont(new java.awt.Font("Heiti SC", 0, 12)); // NOI18N
+        logsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -56,61 +68,73 @@ public class SensorsUI extends javax.swing.JFrame {
                 "Log", "Comment", "Latitude", "Longitude", "Speed", "Break", "Type", "Session"
             }
         ));
-        sensorsTable.setRowSelectionAllowed(false);
-        jScrollPane1.setViewportView(sensorsTable);
+        logsTable.setRowSelectionAllowed(false);
+        jScrollPane1.setViewportView(logsTable);
 
-        showSensorsButton.setLabel("Show Sensors");
-        showSensorsButton.addActionListener(new java.awt.event.ActionListener() {
+        showLogsButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        showLogsButton.setForeground(new java.awt.Color(0, 153, 102));
+        showLogsButton.setText("Show Logs");
+        showLogsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showSensorsButtonActionPerformed(evt);
+                showLogsButtonActionPerformed(evt);
             }
         });
 
-        inspectSpeedButton.setText("Inspect Average Speed");
+        inspectSpeedButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        inspectSpeedButton.setForeground(new java.awt.Color(0, 153, 102));
+        inspectSpeedButton.setText("Average Speed");
         inspectSpeedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inspectSpeedButtonActionPerformed(evt);
             }
         });
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Autotective/UI/smaller.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                .addContainerGap(63, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(showLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(inspectSpeedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(288, 288, 288))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(backButton))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(showSensorsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(inspectSpeedButton)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(16, 16, 16)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(255, 255, 255)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(showSensorsButton)
-                    .addComponent(inspectSpeedButton))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(backButton)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62))))
+                    .addComponent(showLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inspectSpeedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -135,17 +159,20 @@ public class SensorsUI extends javax.swing.JFrame {
 
     
     // Shows all the sensors
-    private void showSensorsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showSensorsButtonActionPerformed
-        // TODO
-    }//GEN-LAST:event_showSensorsButtonActionPerformed
+    private void showLogsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showLogsButtonActionPerformed
+        DefaultTableModel newModel = logControl.basicQuery();
+        logsTable.setModel(newModel);
+    }//GEN-LAST:event_showLogsButtonActionPerformed
 
     // Goes to SpeedUIWindow, displays the average speed by type
     private void inspectSpeedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inspectSpeedButtonActionPerformed
-        if(speedWindow == null)
+
             speedWindow = new SpeedUI();
-        speedWindow.setVisible(true);
-        speedWindow.backWindow = this;
-        this.setVisible(false);
+            
+            speedWindow.setVisible(true);
+            speedWindow.backWindow = this;
+            this.setVisible(false);   
+        
         
     }//GEN-LAST:event_inspectSpeedButtonActionPerformed
 
@@ -188,9 +215,10 @@ public class SensorsUI extends javax.swing.JFrame {
     private javax.swing.JButton backButton;
     private javax.swing.JButton inspectSpeedButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    javax.swing.JTable sensorsTable;
-    private javax.swing.JButton showSensorsButton;
+    javax.swing.JTable logsTable;
+    private javax.swing.JButton showLogsButton;
     // End of variables declaration//GEN-END:variables
 }

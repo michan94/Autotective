@@ -1,4 +1,4 @@
-package entity;
+package Autotective.entity;
 
 import java.sql.Time;
 
@@ -7,11 +7,23 @@ import java.sql.Time;
  */
 public class Sessions {
     private int seshID;
-    private Time startTime;
-    private Time endTime;
+    private String startTime;
+    private String endTime;
     private int testerID;
     private int carID;
     private int settingID;
+    
+    public Sessions() {   
+    }
+    
+    public Sessions(int id, String st, String et, int test, int car, int set) {
+        this.seshID = id;
+        this.startTime = st;
+        this.endTime = et;
+        this.testerID = test;
+        this.carID = car;
+        this.settingID = set;
+    }
 
     public int getSeshID() {
         return seshID;
@@ -21,19 +33,19 @@ public class Sessions {
         this.seshID = seshID;
     }
 
-    public Time getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 

@@ -14,6 +14,17 @@ public class Log {
     private int brake;
     private String typeOf;
     private int seshID;
+    
+    public Log(int id, String comment, double lat, double lon, int speed, int brake, String typeOf, int seshID) {
+        this.logID = id;
+        this.comment = comment;
+        this.latitude = lat;
+        this.longitude = lon;
+        this.speed = speed;
+        this.brake = brake;
+        this.typeOf = typeOf;
+        this.seshID = seshID;
+    }
 
     public int getLogID() {
         return logID;

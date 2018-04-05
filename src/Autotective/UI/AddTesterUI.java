@@ -5,7 +5,16 @@
  */
 package Autotective.UI;
 
+import Autotective.controller.TesterController;
+import Autotective.entity.Tester;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.rowset.JdbcRowSet;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,12 +24,23 @@ public class AddTesterUI extends javax.swing.JFrame {
     protected EngineerUI backWindow;
     private int testerID;
     private String testerName;
+    protected JdbcRowSet rowSet = null;
+    private TesterController controller;
+    private Tester tester;
 
     /**
      * Creates new form AddTesterUI
      */
     public AddTesterUI() {
         initComponents();
+        
+        // Initiliaze controller so that it can provide the data for the table
+        controller = new TesterController();
+        
+        // Call controllers createTable function with this, it will update
+        // the table variable 
+        controller.createTable(this);
+        
     }
 
     /**
@@ -32,6 +52,9 @@ public class AddTesterUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("Autotective?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
+        testerQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT t FROM Tester t");
+        testerList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : testerQuery.getResultList();
         jPanel1 = new javax.swing.JPanel();
         backButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -40,9 +63,16 @@ public class AddTesterUI extends javax.swing.JFrame {
         saveButton = new javax.swing.JButton();
         idLabel = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        testersTable = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        backButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        backButton.setForeground(new java.awt.Color(0, 153, 102));
         backButton.setText("Back");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -50,11 +80,15 @@ public class AddTesterUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Helvetica", 0, 24)); // NOI18N
-        jLabel1.setText("New Tester");
+        jLabel1.setFont(new java.awt.Font("Heiti SC", 0, 36)); // NOI18N
+        jLabel1.setText("Add Tester");
 
+        testerIDField.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
+        testerIDField.setForeground(new java.awt.Color(0, 153, 102));
         testerIDField.setToolTipText("New Tester Numerical ID");
 
+        testerNameField.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
+        testerNameField.setForeground(new java.awt.Color(0, 153, 102));
         testerNameField.setToolTipText("New Tester Name");
         testerNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,6 +96,8 @@ public class AddTesterUI extends javax.swing.JFrame {
             }
         });
 
+        saveButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        saveButton.setForeground(new java.awt.Color(0, 153, 102));
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,11 +105,28 @@ public class AddTesterUI extends javax.swing.JFrame {
             }
         });
 
-        idLabel.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        idLabel.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
         idLabel.setText("Tester ID");
 
-        nameLabel.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        nameLabel.setFont(new java.awt.Font("Heiti SC", 0, 18)); // NOI18N
         nameLabel.setText("Tester Name");
+
+        jScrollPane1.setFont(new java.awt.Font("Heiti SC", 0, 12)); // NOI18N
+
+        testersTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(testersTable);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Autotective/UI/smaller.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -81,45 +134,54 @@ public class AddTesterUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(backButton))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(250, 250, 250)
+                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(162, 162, 162)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(162, 162, 162)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(nameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(idLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(92, 92, 92)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(testerIDField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(testerNameField)
-                                    .addComponent(saveButton, javax.swing.GroupLayout.Alignment.TRAILING))))
-                        .addGap(0, 157, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(nameLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(testerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(idLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(testerIDField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(255, 255, 255)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(288, 288, 288)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(33, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addGap(186, 186, 186)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(testerIDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(idLabel))
+                    .addComponent(idLabel)
+                    .addComponent(testerIDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(testerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameLabel))
                 .addGap(18, 18, 18)
-                .addComponent(saveButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 310, Short.MAX_VALUE)
-                .addComponent(backButton)
-                .addContainerGap())
+                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -132,6 +194,8 @@ public class AddTesterUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        getAccessibleContext().setAccessibleName("addTesterFrame");
 
         pack();
         setLocationRelativeTo(null);
@@ -146,13 +210,28 @@ public class AddTesterUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_testerNameFieldActionPerformed
 
-    // Type check and then save the new tester
+    // Type check and then save the new tester, if check doesn't match
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        
         // TODO add your handling code here:
+        
         if(checkFieldData()){
             testerID = Integer.parseInt(testerIDField.getText());
             testerName = testerNameField.getText();
+            Tester last;
+            
+            // create a new tester to add
+            tester = new Tester(testerID, testerName);
+            
+            
+            // Add the new tester to the database;
+            // and update the jtable of this
+            controller.create(tester, this);
+            
+  
+       
         }
+        else {}
     }//GEN-LAST:event_saveButtonActionPerformed
 
     
@@ -198,19 +277,25 @@ public class AddTesterUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddTesterUI().setVisible(true);
+                    new AddTesterUI().setVisible(true);  
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
+    private javax.persistence.EntityManager entityManager;
     private javax.swing.JLabel idLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JButton saveButton;
     private javax.swing.JTextField testerIDField;
+    private java.util.List<Autotective.UI.Tester> testerList;
     private javax.swing.JTextField testerNameField;
+    private javax.persistence.Query testerQuery;
+    public javax.swing.JTable testersTable;
     // End of variables declaration//GEN-END:variables
 }

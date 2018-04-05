@@ -5,6 +5,8 @@
  */
 package Autotective.UI;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author ege
@@ -14,6 +16,7 @@ public class EngineerUI extends javax.swing.JFrame {
     SensorsUI sensorReportWindow;
     TestsUI testHistoryWindow;
     AddTesterUI addTesterWindow;
+    MainUI backWindow;
     
 
     /**
@@ -38,12 +41,19 @@ public class EngineerUI extends javax.swing.JFrame {
         sessionsButton = new javax.swing.JButton();
         sensorCheckButton = new javax.swing.JButton();
         addTesterButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
-        jLabel1.setText("Welcome Engineer,");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
+        jLabel1.setFont(new java.awt.Font("Heiti SC", 0, 48)); // NOI18N
+        jLabel1.setText("Welcome Engineer");
+
+        queryAllButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        queryAllButton.setForeground(new java.awt.Color(0, 153, 102));
         queryAllButton.setText("Car Inventory");
         queryAllButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -51,20 +61,26 @@ public class EngineerUI extends javax.swing.JFrame {
             }
         });
 
-        sessionsButton.setText("See tests conducted");
+        sessionsButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        sessionsButton.setForeground(new java.awt.Color(0, 153, 102));
+        sessionsButton.setText("Tests Conducted");
         sessionsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sessionsButtonActionPerformed(evt);
             }
         });
 
-        sensorCheckButton.setText("Sensors Report");
+        sensorCheckButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        sensorCheckButton.setForeground(new java.awt.Color(0, 153, 102));
+        sensorCheckButton.setText("Logs Report");
         sensorCheckButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sensorCheckButtonActionPerformed(evt);
             }
         });
 
+        addTesterButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        addTesterButton.setForeground(new java.awt.Color(0, 153, 102));
         addTesterButton.setText("Add Tester");
         addTesterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,42 +88,69 @@ public class EngineerUI extends javax.swing.JFrame {
             }
         });
 
+        backButton.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        backButton.setForeground(new java.awt.Color(0, 153, 102));
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Autotective/UI/smaller.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sessionsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sensorCheckButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addTesterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(queryAllButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(329, 329, 329))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(131, 131, 131)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(130, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addTesterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sensorCheckButton, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sessionsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(queryAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(198, 198, 198))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(283, 283, 283))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(51, 51, 51)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
-                .addGap(155, 155, 155)
-                .addComponent(queryAllButton)
                 .addGap(18, 18, 18)
-                .addComponent(sessionsButton)
+                .addComponent(queryAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(sensorCheckButton)
+                .addComponent(sessionsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(addTesterButton)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addComponent(sensorCheckButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(addTesterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,12 +195,19 @@ public class EngineerUI extends javax.swing.JFrame {
     
     // Goes to Tester Add Window, creates a new one if it is NULL
     private void addTesterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTesterButtonActionPerformed
-        if(addTesterWindow == null){
-        addTesterWindow = new AddTesterUI();}
+        if(addTesterWindow == null)
+        addTesterWindow = new AddTesterUI();
         addTesterWindow.backWindow = this;
         addTesterWindow.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_addTesterButtonActionPerformed
+
+        
+        
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        backWindow.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,7 +246,9 @@ public class EngineerUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addTesterButton;
+    private javax.swing.JButton backButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton queryAllButton;
     private javax.swing.JButton sensorCheckButton;

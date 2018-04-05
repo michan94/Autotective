@@ -3,19 +3,56 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Autotective;
+package Autotective.UI;
+
+import Autotective.UI.MainUI;
+import Autotective.UI.StartSessionUI;
+import Autotective.UI.TesterUI;
+import Autotective.UI.TestingUI;
+import Autotective.controller.CarController;
+import Autotective.controller.SessionsController;
+import Autotective.controller.SettingController;
+import Autotective.entity.Sessions;
+import Autotective.entity.Setting;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import javax.sql.rowset.JdbcRowSet;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Charlotte
  */
 public class StartSessionUI extends javax.swing.JFrame {
-
+    
+    public TesterUI testerWindow;
+    SettingController settingControl = new SettingController();
+    SessionsController sessionsControl = new SessionsController();
+    CarController carControl = new CarController();
+    
     /**
      * Creates new form ChooseCar
      */
     public StartSessionUI() {
         initComponents();
+        fillCarIds();
+    }
+    
+    public void fillCarIds() {
+        JdbcRowSet cars = carControl.queryValid();
+        jComboBox1.removeAllItems();
+        try {
+            while(cars.next()) {
+                jComboBox1.addItem(cars.getString("car.carID"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -27,97 +64,315 @@ public class StartSessionUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrame1 = new javax.swing.JFrame();
+        jFrame2 = new javax.swing.JFrame();
+        jOptionPane1 = new javax.swing.JOptionPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        beginSessionButton = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        autotectiveLabel4 = new javax.swing.JLabel();
+        autotectiveLabel3 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        timeField = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
+        jFrame2.getContentPane().setLayout(jFrame2Layout);
+        jFrame2Layout.setHorizontalGroup(
+            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jOptionPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jFrame2Layout.setVerticalGroup(
+            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jOptionPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(0, 204, 0));
         jPanel1.setToolTipText("");
         jPanel1.setFont(new java.awt.Font("Heiti SC", 0, 13)); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(570, 470));
 
-        jLabel1.setFont(new java.awt.Font("Heiti SC", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Heiti SC", 1, 48)); // NOI18N
         jLabel1.setText("Start Session");
 
-        jButton2.setFont(new java.awt.Font("Heiti TC", 0, 20)); // NOI18N
-        jButton2.setText("Begin");
-        jButton2.setActionCommand("Sign Up");
-        jButton2.setMaximumSize(new java.awt.Dimension(95, 40));
-        jButton2.setMinimumSize(new java.awt.Dimension(95, 40));
-        jButton2.setPreferredSize(new java.awt.Dimension(95, 40));
-        jButton2.setSize(new java.awt.Dimension(97, 40));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        beginSessionButton.setFont(new java.awt.Font("Heiti TC", 0, 24)); // NOI18N
+        beginSessionButton.setForeground(new java.awt.Color(0, 153, 102));
+        beginSessionButton.setText("Begin");
+        beginSessionButton.setActionCommand("Sign Up");
+        beginSessionButton.setMaximumSize(new java.awt.Dimension(95, 40));
+        beginSessionButton.setMinimumSize(new java.awt.Dimension(95, 40));
+        beginSessionButton.setPreferredSize(new java.awt.Dimension(95, 40));
+        beginSessionButton.setSize(new java.awt.Dimension(97, 40));
+        beginSessionButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                beginSessionButtonActionPerformed(evt);
             }
         });
 
         jComboBox1.setFont(new java.awt.Font("Heiti SC", 0, 13)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "c0", "c1", "c2", "c3", "c4", " " }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Heiti SC", 1, 24)); // NOI18N
         jLabel2.setText("Car");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
+
+        autotectiveLabel4.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        autotectiveLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        autotectiveLabel4.setText("Gear Number");
+        autotectiveLabel4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        autotectiveLabel4.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+
+        autotectiveLabel3.setFont(new java.awt.Font("Heiti SC", 0, 24)); // NOI18N
+        autotectiveLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        autotectiveLabel3.setText("Speed Limit");
+        autotectiveLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        autotectiveLabel3.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+
+        jLabel3.setFont(new java.awt.Font("Heiti SC", 1, 36)); // NOI18N
+        jLabel3.setText("Choose Settings");
+
+        jLabel5.setFont(new java.awt.Font("Heiti SC", 1, 24)); // NOI18N
+        jLabel5.setText("Enter Current Time [HH:mm:ss]");
+
+        timeField.setFont(new java.awt.Font("Heiti SC", 0, 12)); // NOI18N
+        timeField.setPreferredSize(new java.awt.Dimension(200, 40));
+        timeField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timeFieldActionPerformed(evt);
+            }
+        });
+
+        jButton5.setFont(new java.awt.Font("Heiti TC", 0, 24)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(0, 153, 102));
+        jButton5.setText("Back");
+        jButton5.setToolTipText("");
+        jButton5.setActionCommand("Sign Up");
+        jButton5.setMaximumSize(new java.awt.Dimension(95, 40));
+        jButton5.setMinimumSize(new java.awt.Dimension(95, 40));
+        jButton5.setPreferredSize(new java.awt.Dimension(95, 40));
+        jButton5.setSize(new java.awt.Dimension(97, 40));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Autotective/UI/smaller.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(143, 215, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(69, 69, 69))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(autotectiveLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(autotectiveLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(139, 139, 139))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(166, 166, 166))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(beginSessionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(241, 241, 241))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(286, 286, 286))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(jLabel1))
+                        .addGap(276, 276, 276)
+                        .addComponent(timeField, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(228, 228, 228)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(50, 50, 50)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(219, Short.MAX_VALUE))
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(88, 88, 88)
+                .addGap(43, 43, 43)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addGap(82, 82, 82)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(63, 63, 63)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addGap(5, 5, 5)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(autotectiveLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(autotectiveLabel3))
+                .addGap(27, 27, 27)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(timeField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(beginSessionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jButton2.getAccessibleContext().setAccessibleName("btnBegin");
+        beginSessionButton.getAccessibleContext().setAccessibleName("beginButton");
         jComboBox1.getAccessibleContext().setAccessibleName("cMenu");
         jLabel2.getAccessibleContext().setAccessibleName("tCar");
+        jComboBox2.getAccessibleContext().setAccessibleName("");
+        timeField.getAccessibleContext().setAccessibleName("timeField");
+        jButton5.getAccessibleContext().setAccessibleName("backButton");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        // Gear Number Menu; select speed limit
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+        //Speed Limit Menu; select speed limit
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void beginSessionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_beginSessionButtonActionPerformed
+        
+//        //BEGIN BUTTON
+//        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        
+        //BEGIN BUTTON
+         //[HH:MM:SS]
+        String time = timeField.getText();
+        String regex = "([0-1]?\\d|2[0-3]):([0-5]?\\d):([0-5]?\\d)";
+
+        if (time.matches(regex)) {
+            //if time is valid format, open new TestingUi window
+            int carID = Integer.parseInt(String.valueOf(jComboBox1.getSelectedItem()));
+            int gearNum = Integer.parseInt(String.valueOf(jComboBox2.getSelectedItem()));
+            int speedLim = Integer.parseInt(String.valueOf(jComboBox3.getSelectedItem()));
+            String startTime = timeField.getText();
+            
+            Setting setting = new Setting(0, gearNum, speedLim, 1);
+            setting = settingControl.create(setting);
+            
+            //create a new session to add
+            
+            // TODO: get actual carID and (possibly) testerID
+            Sessions sesh = new Sessions(0, startTime, null, 1, carID, setting.getSettingID());
+            sessionsControl.create(sesh);
+            //add new session to database;i
+            //add the carBeingTested, gearNum, speedLim, timeEntered)
+             
+        TestingUI testingWindow = new TestingUI();
+        testingWindow.setID(sesh.getSeshID());
+        testingWindow.setVisible(true);
+        this.setVisible(false);
+        }
+        //if time is invalid, show error message
+            else jOptionPane1.showMessageDialog(jFrame2, "Please fix time format to HH:mm:ss"); 
+//        this.setVisible(false);
+//        TestingUI testingWindow = new TestingUI();
+//        testingWindow.setVisible(true);
+        
+        //================================================================================
+        
+        
+        
+    }//GEN-LAST:event_beginSessionButtonActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+       //BACK BUTTON;
+       this.setVisible(false);
+       testerWindow.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void timeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeFieldActionPerformed
+        // TODO add your handling code here:
+       // enter time into table 
+    }//GEN-LAST:event_timeFieldActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,10 +411,22 @@ public class StartSessionUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel autotectiveLabel3;
+    private javax.swing.JLabel autotectiveLabel4;
+    private javax.swing.JButton beginSessionButton;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JFrame jFrame1;
+    private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JOptionPane jOptionPane1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField timeField;
     // End of variables declaration//GEN-END:variables
 }
